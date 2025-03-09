@@ -44,16 +44,17 @@ char reader::get_next_char() {
   idx++;
   chars_to_process--;
 
-  if (idx == BUFF_SIZE && !finished) {
+  if (idx == BUFF_SIZE) {
     flush();
+    if ( !finished ) {
 
-    file.read(buffer[curr_buffer], BUFF_SIZE);
-    chars_to_process += file.gcount();
-    if (file.gcount() < BUFF_SIZE) {
-      buffer[curr_buffer][file.gcount()] = '\0';
-      finished = true;
+      file.read(buffer[curr_buffer], BUFF_SIZE);
+      chars_to_process += file.gcount();
+      if (file.gcount() < BUFF_SIZE) {
+        buffer[curr_buffer][file.gcount()] = '\0';
+        finished = true;
+      }
     }
-
     curr_buffer = (curr_buffer + 1) % BUFF_COUNT;
   }
 
