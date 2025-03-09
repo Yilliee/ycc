@@ -17,6 +17,7 @@ inline void skip_till_comment_start(reader &rdr, writer &wrtr,
 
   while (!rdr.is_finished() && !(single_line_comment || multi_line_comment)) {
     char ch = rdr.get_next_char();
+    rdr.increment_ptr();
 
     if ((ch == '/' || ch == '*') && potentially_comment) {
       potentially_comment = false;
@@ -40,6 +41,8 @@ inline void ignore_till_comment_end(reader &rdr, writer &wrtr,
                                     bool &multi_line_comment) {
   while (!rdr.is_finished() && (single_line_comment || multi_line_comment)) {
     char ch = rdr.get_next_char();
+    rdr.increment_ptr();
+
     if (ch != '\n')
       wrtr.put_next_char(' ');
     else
@@ -97,6 +100,7 @@ void preprocessor::remove_trailing_spaces(const std::string &input_file,
   std::queue<char> whitespaces;
   while (!rdr.is_finished()) {
     char ch = rdr.get_next_char();
+    rdr.increment_ptr();
 
     if (ch != '\n' && isspace(ch)) {
       whitespaces.push(ch);

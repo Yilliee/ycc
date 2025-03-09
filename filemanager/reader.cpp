@@ -35,19 +35,21 @@ bool reader::is_open() const { return file.is_open(); }
 
 bool reader::is_finished() const { return finished && (chars_to_process == 0); }
 
-char reader::get_next_char() {
+char reader::get_next_char() const {
   if (!is_open() || is_finished()) {
     throw std::runtime_error("File not open or already finished");
   }
 
-  char retval = buffer[curr_buffer][idx];
+  return buffer[curr_buffer][idx];
+}
+
+void reader::increment_ptr() {
   idx++;
   chars_to_process--;
 
   if (idx == BUFF_SIZE) {
     flush();
-    if ( !finished ) {
-
+    if (!finished) {
       file.read(buffer[curr_buffer], BUFF_SIZE);
       chars_to_process += file.gcount();
       if (file.gcount() < BUFF_SIZE) {
@@ -57,6 +59,4 @@ char reader::get_next_char() {
     }
     curr_buffer = (curr_buffer + 1) % BUFF_COUNT;
   }
-
-  return retval;
 }

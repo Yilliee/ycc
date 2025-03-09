@@ -24,7 +24,8 @@ public:
   void close();
   bool is_open() const;
   bool is_finished() const;
-  char get_next_char();
+  char get_next_char() const;
+  void increment_ptr();
 };
 }; // namespace filemanager
 
