@@ -52,6 +52,8 @@ void preprocessor::preprocess_file(const std::string &input_file,
   while (!rdr.is_finished()) {
     skip_till_comment_start(rdr, wrtr, single_line_comment, multi_line_comment);
 
+    if (single_line_comment)
+      wrtr.put_next_char('\n');
     ignore_till_comment_end(rdr, single_line_comment, multi_line_comment);
 
     if (multi_line_comment)
