@@ -336,6 +336,15 @@ bool automaton::process_char(char c) {
   return false;
 }
 
+bool automaton::force_other_transition() {
+  if (current_state == -1)
+    return false;
+  current_state = get_node(current_state).other_transition;
+  return true;
+}
+
+bool automaton::on_invalid_state() const { return (current_state == -1); }
+
 bool automaton::is_accepted() const {
   int other_state = get_node(current_state).other_transition;
   return this->is_final() ||

@@ -41,6 +41,8 @@ public:
   void delete_string(const std::string &str);
   std::pair<bool, std::string> find(const std::string &str);
   bool process_char(char c);
+  bool force_other_transition();
+  bool on_invalid_state() const;
   bool is_accepted() const;
   bool is_final() const;
   bool can_advance_ptr() const;
