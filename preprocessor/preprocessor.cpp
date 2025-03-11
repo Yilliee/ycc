@@ -5,6 +5,8 @@
 #include <preprocessor/preprocessor.h>
 #include <queue>
 
+using namespace ycc;
+
 using filemanager::reader, filemanager::writer;
 using std::cerr, std::endl;
 using std::filesystem::path, std::filesystem::remove,

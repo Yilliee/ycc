@@ -1,5 +1,5 @@
 #include <lexer/lexer.h>
 
-using namespace lexer;
+using namespace ycc::lexer;
 
 lex::lex() = default;

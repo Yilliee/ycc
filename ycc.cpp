@@ -4,6 +4,8 @@
 
 using std::string, std::cout, std::cerr, std::endl;
 
+using namespace ycc;
+
 int main(int argc, char **argv) {
   if (argc < 2) {
     cerr << "Usage: " << argv[0] << " <list of input files>" << endl;
