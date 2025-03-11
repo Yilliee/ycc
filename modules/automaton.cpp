@@ -107,7 +107,6 @@ automaton::automaton(const string &transition_filename,
   // Process the token file: expected columns are index, advance_ptr, token.
   // Here we mark each node as final.
   while (getline(token_file, line)) {
-    std::cout << "Token line: " << line << std::endl;
     vector<string> cells = csv_split(line);
 
     if (cells.size() < 3) {
