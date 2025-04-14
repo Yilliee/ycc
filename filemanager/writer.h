@@ -13,6 +13,7 @@ class writer {
   std::streamoff idx;
   std::streamsize chars_to_process;
   std::ofstream file;
+  std::string filename;
 
   void flush(int buffnum, std::streamoff chars_count);
 
@@ -23,6 +24,7 @@ public:
   void close();
   bool is_open() const;
   void put_next_char(char c);
+  std::string get_filename() const;
 };
 }; // namespace filemanager
 

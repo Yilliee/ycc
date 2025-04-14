@@ -6,13 +6,15 @@ reader::reader()
     : curr_buffer(0), idx(0), chars_to_process(0), finished(false) {}
 
 reader::reader(const std::string &input_file)
-    : curr_buffer(0), idx(0), chars_to_process(0), finished(false) {
+    : curr_buffer(0), idx(0), chars_to_process(0), finished(false), filename(input_file) {
   open(input_file);
 }
 
 void reader::flush() { idx = 0; }
 
 void reader::open(const std::string &input_file) {
+  filename = input_file;
+
   flush();
   file.open(input_file);
   for (int i = 0; i < BUFF_COUNT; i++) {
@@ -29,7 +31,7 @@ void reader::open(const std::string &input_file) {
   }
 }
 
-void reader::close() { file.close(); }
+void reader::close() { file.close(); filename.clear(); }
 
 bool reader::is_open() const { return file.is_open(); }
 
@@ -60,3 +62,5 @@ void reader::increment_ptr() {
     curr_buffer = (curr_buffer + 1) % BUFF_COUNT;
   }
 }
+
+std::string reader::get_filename() const { return filename; }

@@ -7,7 +7,7 @@ using namespace filemanager;
 writer::writer() : curr_buffer(0), idx(0), chars_to_process(0) {}
 
 writer::writer(const std::string &input_file)
-    : curr_buffer(0), idx(0), chars_to_process(0) {
+    : curr_buffer(0), idx(0), chars_to_process(0), filename(input_file) {
   open(input_file);
 }
 
@@ -22,6 +22,7 @@ void writer::flush(int buffnum, std::streamoff chars_count) {
 void writer::open(const std::string &input_file) {
   close();
   file.open(input_file);
+  filename = input_file;
 }
 
 void writer::close() {
@@ -42,6 +43,7 @@ void writer::close() {
     curr_buffer = (curr_buffer + 1) % BUFF_COUNT;
   }
   file.close();
+  filename.clear();
 }
 
 bool writer::is_open() const { return file.is_open(); }
@@ -63,3 +65,5 @@ void writer::put_next_char(char c) {
       flush(curr_buffer, BUFF_SIZE);
   }
 }
+
+std::string writer::get_filename() const { return filename; }
