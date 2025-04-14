@@ -53,8 +53,10 @@ inline void ignore_till_comment_end(reader &rdr, writer &wrtr,
     if (ch == '\n' && single_line_comment)
       single_line_comment = false;
     else if (ch == '*' && !rdr.is_finished() && rdr.get_next_char() == '/' &&
-             multi_line_comment)
+             multi_line_comment) {
+      rdr.increment_ptr();
       multi_line_comment = false;
+    }
   }
 }
 
