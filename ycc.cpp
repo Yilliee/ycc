@@ -9,9 +9,11 @@
 #include <preprocessor/preprocessor.h>
 #include <tables/literal_table.h>
 #include <tables/symbol_table.h>
+#include <vector>
 
 using std::shared_ptr;
 using std::string, std::cout, std::cerr, std::endl;
+using std::vector;
 
 using namespace ycc;
 
@@ -24,19 +26,27 @@ int main(int argc, char **argv) {
     return 1;
   }
 
+  vector<string> filenames;
+  filenames.reserve(argc);
+
   bool dump_tokens = false;
   bool keep_preprocessed = false;
   for (int i = 1; i < argc && (!dump_tokens || !keep_preprocessed); i++) {
-    if (string(argv[i]) == "-dump-tokens")
+    string arg = argv[i];
+    if (arg == "-dump-tokens")
       dump_tokens = true;
-    if (string(argv[i]) == "-E")
+    else if (arg == "-E")
       keep_preprocessed = true;
+    else
+      filenames.emplace_back(arg);
   }
+
+  filenames.resize(filenames.size());
+
   shared_ptr<symbol_table> sym_table = std::make_shared<symbol_table>();
   shared_ptr<literal_table> lit_table = std::make_shared<literal_table>();
 
-  for (int i = 1; i < argc; i++) {
-    string ifile = argv[i];
+  for (auto &ifile : filenames) {
 
     string ofile = ifile;
     ofile.erase(find(ofile.rbegin(), ofile.rend(), '.').base() - ofile.begin());
