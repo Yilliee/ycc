@@ -23,5 +23,6 @@
 37,1,pipepipe
 39,1,ampamp
 41,1,exclaimequal
-42,1,less
-43,1,greater
+42,0,less
+43,0,greater
+44,1,op_quote
