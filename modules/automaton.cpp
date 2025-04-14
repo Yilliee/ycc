@@ -24,7 +24,7 @@ vector<string> csv_split(const string &line) {
   bool escaped = false;
 
   while ((en = line.find(',', st)) != string::npos) {
-    string token = std::move(line.substr(st, en - st));
+    string token = line.substr(st, en - st);
     size_t token_size = token.size();
     if (escaped) {
       cells.back() += token;
@@ -332,6 +332,7 @@ bool automaton::process_char(char c) {
     return true;
   }
 
+  current_state = -1;
   return false;
 }
 
@@ -357,3 +358,9 @@ bool automaton::can_advance_ptr() const {
 }
 
 void automaton::reset_automaton() { current_state = 0; }
+
+string automaton::get_token() const {
+  if (on_invalid_state() || !is_final())
+    return "";
+  return get_node(current_state).token;
+}

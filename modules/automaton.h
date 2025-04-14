@@ -47,6 +47,7 @@ public:
   bool is_final() const;
   bool can_advance_ptr() const;
   void reset_automaton();
+  std::string get_token() const;
 };
 
 } // namespace ycc
